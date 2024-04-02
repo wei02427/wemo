@@ -1,73 +1,356 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+---
+title: API v1.0.0
+language_tabs:
+  - shell: Shell
+  - http: HTTP
+  - javascript: JavaScript
+  - ruby: Ruby
+  - python: Python
+  - php: PHP
+  - java: Java
+  - go: Go
+toc_footers: []
+includes: []
+search: true
+highlight_theme: darkula
+headingLevel: 2
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<!-- Generator: Widdershins v4.0.1 -->
 
-## Description
+<h1 id="api"> v1.0.0</h1>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+> Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-## Installation
+Base URLs:
 
-```bash
-$ pnpm install
+* <a href="http://localhost:3000">http://localhost:3000</a>
+
+# Authentication
+
+- HTTP Authentication, scheme: bearer 
+
+<h1 id="api-user">User</h1>
+
+## 登入
+
+<a id="opIdUserController_login"></a>
+
+`POST /user/login`
+
+> Body parameter
+
+```json
+{
+  "Account": "string",
+  "Password": "string"
+}
 ```
 
-## Running the app
+<h3 id="登入-parameters">Parameters</h3>
 
-```bash
-# development
-$ pnpm run start
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[LoginReqDto](#schemaloginreqdto)|true|none|
+|» Account|body|string|true|none|
+|» Password|body|string|true|none|
 
-# watch mode
-$ pnpm run start:dev
+<h3 id="登入-responses">Responses</h3>
 
-# production mode
-$ pnpm run start:prod
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|none|None|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## 取得過往租借紀錄
+
+<a id="opIdUserController_getRecord"></a>
+
+`GET /user/rentRecord`
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "LicensePlate": "string",
+    "UserId": 0,
+    "StartTime": "string",
+    "EndTime": "string"
+  }
+]
 ```
 
-## Test
+<h3 id="取得過往租借紀錄-responses">Responses</h3>
 
-```bash
-# unit tests
-$ pnpm run test
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|none|Inline|
 
-# e2e tests
-$ pnpm run test:e2e
+<h3 id="取得過往租借紀錄-responseschema">Response Schema</h3>
 
-# test coverage
-$ pnpm run test:cov
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[GetRentRecordResDto](#schemagetrentrecordresdto)]|false|none|none|
+|» LicensePlate|string|true|none|none|
+|» UserId|number|true|none|none|
+|» StartTime|string|true|none|none|
+|» EndTime|string|true|none|none|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+<h1 id="api-scooter">Scooter</h1>
+
+## 租車
+
+<a id="opIdScooterController_rent"></a>
+
+`POST /scooter/rent`
+
+> Body parameter
+
+```json
+{
+  "ScooterId": 0
+}
 ```
 
-## Support
+<h3 id="租車-parameters">Parameters</h3>
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[RentScooterReqDto](#schemarentscooterreqdto)|true|none|
+|» ScooterId|body|number|true|none|
 
-## Stay in touch
+> Example responses
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+> 201 Response
 
-## License
+```json
+{
+  "RentId": 0
+}
+```
 
-Nest is [MIT licensed](LICENSE).
+<h3 id="租車-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|none|[RentScooterResDto](#schemarentscooterresdto)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## 還車
+
+<a id="opIdScooterController_return"></a>
+
+`POST /scooter/return`
+
+> Body parameter
+
+```json
+{
+  "RentId": 0
+}
+```
+
+<h3 id="還車-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ReturnScooterReqDto](#schemareturnscooterreqdto)|true|none|
+|» RentId|body|number|true|none|
+
+<h3 id="還車-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|none|None|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## 可用車輛
+
+<a id="opIdScooterController_get"></a>
+
+`GET /scooter/available`
+
+> Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "Id": 0,
+    "LicensePlate": "string"
+  }
+]
+```
+
+<h3 id="可用車輛-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|none|Inline|
+
+<h3 id="可用車輛-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[GetAvailableListResDto](#schemagetavailablelistresdto)]|false|none|none|
+|» Id|number|true|none|none|
+|» LicensePlate|string|true|none|none|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+# Schemas
+
+<h2 id="tocS_LoginReqDto">LoginReqDto</h2>
+<!-- backwards compatibility -->
+<a id="schemaloginreqdto"></a>
+<a id="schema_LoginReqDto"></a>
+<a id="tocSloginreqdto"></a>
+<a id="tocsloginreqdto"></a>
+
+```json
+{
+  "Account": "string",
+  "Password": "string"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|Account|string|true|none|none|
+|Password|string|true|none|none|
+
+<h2 id="tocS_GetRentRecordResDto">GetRentRecordResDto</h2>
+<!-- backwards compatibility -->
+<a id="schemagetrentrecordresdto"></a>
+<a id="schema_GetRentRecordResDto"></a>
+<a id="tocSgetrentrecordresdto"></a>
+<a id="tocsgetrentrecordresdto"></a>
+
+```json
+{
+  "LicensePlate": "string",
+  "UserId": 0,
+  "StartTime": "string",
+  "EndTime": "string"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|LicensePlate|string|true|none|none|
+|UserId|number|true|none|none|
+|StartTime|string|true|none|none|
+|EndTime|string|true|none|none|
+
+<h2 id="tocS_RentScooterReqDto">RentScooterReqDto</h2>
+<!-- backwards compatibility -->
+<a id="schemarentscooterreqdto"></a>
+<a id="schema_RentScooterReqDto"></a>
+<a id="tocSrentscooterreqdto"></a>
+<a id="tocsrentscooterreqdto"></a>
+
+```json
+{
+  "ScooterId": 0
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|ScooterId|number|true|none|none|
+
+<h2 id="tocS_RentScooterResDto">RentScooterResDto</h2>
+<!-- backwards compatibility -->
+<a id="schemarentscooterresdto"></a>
+<a id="schema_RentScooterResDto"></a>
+<a id="tocSrentscooterresdto"></a>
+<a id="tocsrentscooterresdto"></a>
+
+```json
+{
+  "RentId": 0
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|RentId|number|true|none|none|
+
+<h2 id="tocS_ReturnScooterReqDto">ReturnScooterReqDto</h2>
+<!-- backwards compatibility -->
+<a id="schemareturnscooterreqdto"></a>
+<a id="schema_ReturnScooterReqDto"></a>
+<a id="tocSreturnscooterreqdto"></a>
+<a id="tocsreturnscooterreqdto"></a>
+
+```json
+{
+  "RentId": 0
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|RentId|number|true|none|none|
+
+<h2 id="tocS_GetAvailableListResDto">GetAvailableListResDto</h2>
+<!-- backwards compatibility -->
+<a id="schemagetavailablelistresdto"></a>
+<a id="schema_GetAvailableListResDto"></a>
+<a id="tocSgetavailablelistresdto"></a>
+<a id="tocsgetavailablelistresdto"></a>
+
+```json
+{
+  "Id": 0,
+  "LicensePlate": "string"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|Id|number|true|none|none|
+|LicensePlate|string|true|none|none|
+
