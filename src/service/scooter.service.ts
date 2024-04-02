@@ -18,26 +18,20 @@ export class ScooterService {
         if (!this.locks.has(scooterId)) this.locks.set(scooterId, new Mutex())
         const mutex = this.locks.get(scooterId);
         const release = await mutex.acquire();
-        console.log('ss', userId, scooterId)
 
         try {
             const scooter = await this.scooterDao.get(scooterId);
             if (!scooter || scooter.RentUserId) throw new BadRequestException('Scooter is unavailable.');
-            console.log('rentId')
 
             const rentId = await this.scooterDao.transacting(async () => {
-                console.log('saaa')
 
-                const d = await this.scooterDao.update({ Id: scooterId, RentUserId: userId });
 
-                console.log('sbbb')
+                await this.scooterDao.update({ Id: scooterId, RentUserId: userId });
+
                 await this.userDao.update({ Id: userId, ScooterId: scooterId });
-                console.log('sccc')
 
-                const x = await this.rentDao.add({ UserId: userId, ScooterId: scooterId, StartTime: dayjs().toISOString() });
-                console.log('xxxx')
+                return await this.rentDao.add({ UserId: userId, ScooterId: scooterId, StartTime: dayjs().toISOString() });
 
-                return x
             })
             return rentId[0];
 
@@ -70,7 +64,7 @@ export class ScooterService {
             })
             return rentId;
 
-        } finally  {
+        } finally {
             release();
         }
     }
