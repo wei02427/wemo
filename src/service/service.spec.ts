@@ -170,12 +170,12 @@ describe('UserService', () => {
   })
 
   describe('rent', () => {
-    it('should rent only 1 scooter at same time.', async () => {
+    it('Should rent only 1 scooter at a time.', async () => {
       await userService.rent(1)
       await expect(userService.rent(2)).rejects.toEqual(new BadRequestException('User has rent a scooter.'))
     })
 
-    it('get rent record.', async () => {
+    it('Get rent record.', async () => {
       await userService.rent(1)
       await expect(userService.getRentRecord()).resolves.toStrictEqual([{
         UserId: 1,
@@ -189,16 +189,16 @@ describe('UserService', () => {
   })
 
   describe('return', () => {
-    it('should return the scooter after rent.', async () => {
+    it('Should return the scooter after rent.', async () => {
       const rentId = await userService.rent(1)
       await expect(userService.return(rentId.RentId)).resolves.toEqual(rentId.RentId)
     })
 
-    it('can not return the scooter not exit.', async () => {
+    it('Can not return the rent record which does not exist.', async () => {
       await expect(userService.return(1)).rejects.toEqual(new Error('Rent record not found.'))
     })
 
-    it('can not return the scooter after return.', async () => {
+    it('Can not return the scooter twice.', async () => {
       const { RentId } = await userService.rent(1)
       await userService.return(RentId)
 
@@ -213,7 +213,6 @@ describe('ScooterService', () => {
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
-        // UserService,
         ScooterService,
         {
           provide: RentDao,
@@ -238,7 +237,7 @@ describe('ScooterService', () => {
   })
 
   describe('rent', () => {
-    it('scooter can be rent by a user at same time.', async () => {
+    it('A scooter can only be rented by one user at a time.', async () => {
       await scooterService.rent(1, 1)
       await expect(scooterService.rent(2, 1)).rejects.toEqual(new BadRequestException('Scooter is unavailable.'))
     })
