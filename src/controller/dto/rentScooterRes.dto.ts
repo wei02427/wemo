@@ -1,3 +1,3 @@
 export class RentScooterResDto {
-    RentId: number;
+  RentId: number
 }

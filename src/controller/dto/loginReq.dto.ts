@@ -1,9 +1,9 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator'
 
 export class LoginReqDto {
-    @IsString()
-    Account: string;
-    
-    @IsString()
-    Password: string;
+  @IsString()
+    Account: string
+
+  @IsString()
+    Password: string
 }

@@ -1,20 +1,19 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { createOpenAPIdoc } from './utils/createDoc';
+import { NestFactory } from '@nestjs/core'
+import { AppModule } from './app.module'
+import { createDoc } from './utils/createDoc'
 
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
+async function bootstrap () {
+  const app = await NestFactory.create(AppModule)
 
   const config = new DocumentBuilder()
     .addBearerAuth()
     .addServer('http://localhost:3000', 'localhost')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  createOpenAPIdoc(document);
+    .build()
+  const document = SwaggerModule.createDocument(app, config)
+  createDoc(document)
 
-  await app.listen(3000);
+  await app.listen(3000)
 }
-bootstrap();
+bootstrap()

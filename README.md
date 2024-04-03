@@ -173,11 +173,19 @@ This operation does not require authentication
 |body|body|[ReturnScooterReqDto](#schemareturnscooterreqdto)|true|none|
 |» RentId|body|number|true|none|
 
+> Example responses
+
+> 201 Response
+
+```json
+0
+```
+
 <h3 id="還車-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|none|None|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|none|number|
 
 <aside class="success">
 This operation does not require authentication

@@ -1,3 +1,3 @@
 export class LoginResDto {
-    Token: string;
+  Token: string
 }

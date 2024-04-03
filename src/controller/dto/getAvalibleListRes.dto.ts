@@ -1,4 +1,4 @@
 export class GetAvailableListResDto {
-    Id: number;
-    LicensePlate: string;
+  Id: number
+  LicensePlate: string
 }

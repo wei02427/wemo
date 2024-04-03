@@ -1,5 +1,5 @@
 export interface Scooter {
-    Id: number;
-    LicensePlate: string;
-    RentUserId: number | null;
+  Id: number
+  LicensePlate: string
+  UserId: number | null
 }
