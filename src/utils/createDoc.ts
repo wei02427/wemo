@@ -16,7 +16,7 @@ export const createDoc = (document: OpenAPIObject) => {
       '--summary',
       'swagger-spec.json',
       '-o',
-      'README.md',
+      'API_README.md',
       '--code',
       'true',
       '--expandBody',
