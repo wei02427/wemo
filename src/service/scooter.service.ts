@@ -4,20 +4,17 @@ import { ScooterDao } from '../dao/scooter.dao'
 import { Mutex } from 'async-mutex'
 import * as dayjs from 'dayjs'
 import { UserDao } from '../dao/user.dao'
-import { User } from '../interceptor/user'
-
 
 @Injectable()
 export class ScooterService {
   private readonly locks = new Map<number, Mutex>()
-  constructor(
+  constructor (
     private readonly rentDao: RentDao,
     private readonly scooterDao: ScooterDao,
-    private readonly userDao: UserDao,
-    private readonly user: User,
+    private readonly userDao: UserDao
   ) { }
 
-  async rent(userId: number, scooterId: number) {
+  async rent (userId: number, scooterId: number) {
     if (!this.locks.has(scooterId)) this.locks.set(scooterId, new Mutex())
     const mutex = this.locks.get(scooterId)
     const release = await mutex.acquire()
@@ -39,13 +36,13 @@ export class ScooterService {
     }
   }
 
-  async return(rentId: number) {
+  async return (rentId: number) {
     const rentRecord = await this.rentDao.get(rentId)
 
     if (!rentRecord) throw new Error('Rent record not found.')
     if (rentRecord.EndTime) throw new Error('Scooter has been returned.')
-    if (rentRecord.UserId !== this.user.Id) throw new Error('Not return by same user.')
-      const { ScooterId: scooterId, UserId } = rentRecord
+
+    const { ScooterId: scooterId, UserId } = rentRecord
     if (!this.locks.has(scooterId)) this.locks.set(scooterId, new Mutex())
     const mutex = this.locks.get(scooterId)
     const release = await mutex.acquire()
@@ -67,11 +64,11 @@ export class ScooterService {
     }
   }
 
-  async getAvailableList() {
+  async getAvailableList () {
     return await this.scooterDao.getAvailableList()
   }
 
-  async getRentRecord(scooterId: number) {
+  async getRentRecord (scooterId: number) {
     return await this.rentDao.getByScooter(scooterId)
   }
 }
